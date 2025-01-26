@@ -1,7 +1,8 @@
 const library = document.querySelector('.library');
 const newBook = document.querySelector('#new-book');
 const form = document.querySelector('#book-form');
-const bookTable = document.querySelector('.existing-books')
+const existingBooks = document.querySelector('.existing-books');
+const bookTable = document.querySelector('.book-table');
 
 const myLibrary = [];
 
@@ -18,11 +19,20 @@ form.addEventListener('submit', (e) => {
     const pages = document.querySelector('#book-pages').value
     const read = document.querySelector('#book-read').checked ? true : false;
     addBookToLibrary(title, author, pages, read);
-    addBookToTable();
+    updateBookTable();
     form.reset();
 
     if (!form.classList.contains('hidden')) {
         form.classList.add('hidden');
+    }
+});
+
+bookTable.addEventListener('click', event => {
+    if (event.target.classList.contains('book-removal')) {
+        alert('the fuck')
+        rowId = event.target.closest('tr').id;
+        myLibrary.splice(rowId, 1);
+        updateBookTable();
     }
 });
 
@@ -38,9 +48,9 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
 }
 
-function addBookToTable() {
-    while (bookTable.firstChild) {
-        bookTable.removeChild(bookTable.firstChild);
+function updateBookTable() {
+    while (existingBooks.firstChild) {
+        existingBooks.removeChild(existingBooks.firstChild);
     };
     myLibrary.forEach(book => {
         const row = document.createElement('tr');
@@ -67,7 +77,7 @@ function addBookToTable() {
         removeButton.classList.add('book-removal');
         row.appendChild(removeButton);
        
-        bookTable.appendChild(row);
+        existingBooks.appendChild(row);
     });
 };
 
