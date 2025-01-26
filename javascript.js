@@ -1,9 +1,7 @@
-const body = document.querySelector('body');
 const library = document.querySelector('.library');
 const newBook = document.querySelector('#new-book');
 const form = document.querySelector('#book-form');
 const bookTable = document.querySelector('.existing-books')
-const submitBook = document.querySelector('#submit-book');
 
 const myLibrary = [];
 
@@ -20,14 +18,13 @@ form.addEventListener('submit', (e) => {
     const pages = document.querySelector('#book-pages').value
     const read = document.querySelector('#book-read').checked ? true : false;
     addBookToLibrary(title, author, pages, read);
+    addBookToTable();
     form.reset();
-    form.classList.add('hidden');
+
+    if (!form.classList.contains('hidden')) {
+        form.classList.add('hidden');
+    }
 });
-
-// addBookToLibrary('HP', "Rowling", 300, false);
-// addBookToLibrary('SP', "Rowling", 300, true);
-// addBookToLibrary('TWD', "Rowling", 300, false);
-
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -41,18 +38,32 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
 }
 
-// myLibrary.forEach(book => {
-//     const newRow = document.createElement('tr');
+function addBookToTable() {
+    while (bookTable.firstChild) {
+        bookTable.removeChild(bookTable.firstChild);
+    };
+    myLibrary.forEach(book => {
+        const row = document.createElement('tr');
 
-//     newRow.innerHTML = `
-//       <td>${book.title}</td>
-//       <td>${book.author}</td>
-//       <td>${book.pages}</td>
-//       <td>${book.read}</td>
-//     `;
-//     bookTable.appendChild(newRow);
+        const titleCell = document.createElement('td');
+        titleCell.textContent = book.title;
+        row.appendChild(titleCell);
 
-// });
+        const authorCell = document.createElement('td');
+        authorCell.textContent = book.author;
+        row.appendChild(authorCell);
+
+        const pagesCell = document.createElement('td');
+        pagesCell.textContent = book.pages;
+        row.appendChild(pagesCell);
+
+        const readCell = document.createElement('td');
+        readCell.textContent = book.read === true ? 'Yes' : 'No';
+        row.appendChild(readCell);
+       
+        bookTable.appendChild(row);
+    });
+};
 
 function addBookToLibrary(...args) {
     const book = new Book(...args);
