@@ -44,6 +44,7 @@ function addBookToTable() {
     };
     myLibrary.forEach(book => {
         const row = document.createElement('tr');
+        row.id = myLibrary.indexOf(book);
 
         const titleCell = document.createElement('td');
         titleCell.textContent = book.title;
@@ -60,6 +61,11 @@ function addBookToTable() {
         const readCell = document.createElement('td');
         readCell.textContent = book.read === true ? 'Yes' : 'No';
         row.appendChild(readCell);
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.classList.add('book-removal');
+        row.appendChild(removeButton);
        
         bookTable.appendChild(row);
     });
