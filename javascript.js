@@ -1,4 +1,23 @@
+const body = document.querySelector('body');
+const library = document.querySelector('.library');
+const newBook = document.querySelector('#new-book');
+const form = document.querySelector('#book-form');
+
+
 const myLibrary = [];
+
+newBook.addEventListener('click', () => {
+    if (form.classList.contains('hidden')) {
+
+        form.classList.remove('hidden');
+    }
+
+});
+
+addBookToLibrary('HP', "Rowling", 300, false);
+addBookToLibrary('SP', "Rowling", 300, false);
+addBookToLibrary('TWD', "Rowling", 300, false);
+
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -12,22 +31,15 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
 }
 
-function addBookToLibrary(...args) {
-    const book = new Book(...args);
-    myLibrary.push(book);
-}
-
-addBookToLibrary('HP', "Rowling", 300, false);
-addBookToLibrary('SP', "Rowling", 300, false);
-addBookToLibrary('TWD', "Rowling", 300, false);
-
-const library = document.querySelector('.library');
-
 myLibrary.forEach(book => {
     const item = document.createElement('p');
     item.className = 'book';
     item.textContent = book.info();
     library.appendChild(item);
 });
-// const book = new Book('HP', "Rowling", 300, false);
-// console.log(book.info());
+
+function addBookToLibrary(...args) {
+    const book = new Book(...args);
+    myLibrary.push(book);
+}
+
