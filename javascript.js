@@ -3,6 +3,7 @@ const library = document.querySelector('.library');
 const newBook = document.querySelector('#new-book');
 const form = document.querySelector('#book-form');
 const bookTable = document.querySelector('.existing-books')
+const submitBook = document.querySelector('#submit-book');
 
 const myLibrary = [];
 
@@ -12,9 +13,20 @@ newBook.addEventListener('click', () => {
     }
 });
 
-addBookToLibrary('HP', "Rowling", 300, false);
-addBookToLibrary('SP', "Rowling", 300, true);
-addBookToLibrary('TWD', "Rowling", 300, false);
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = document.querySelector('#book-title').value
+    const author = document.querySelector('#book-author').value
+    const pages = document.querySelector('#book-pages').value
+    const read = document.querySelector('#book-read').checked ? true : false;
+    addBookToLibrary(title, author, pages, read);
+    form.reset();
+    form.classList.add('hidden');
+});
+
+// addBookToLibrary('HP', "Rowling", 300, false);
+// addBookToLibrary('SP', "Rowling", 300, true);
+// addBookToLibrary('TWD', "Rowling", 300, false);
 
 
 function Book(title, author, pages, read) {
@@ -29,18 +41,18 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
 }
 
-myLibrary.forEach(book => {
-    const newRow = document.createElement('tr');
+// myLibrary.forEach(book => {
+//     const newRow = document.createElement('tr');
 
-    newRow.innerHTML = `
-      <td>${book.title}</td>
-      <td>${book.author}</td>
-      <td>${book.pages}</td>
-      <td>${book.read}</td>
-    `;
-    bookTable.appendChild(newRow);
+//     newRow.innerHTML = `
+//       <td>${book.title}</td>
+//       <td>${book.author}</td>
+//       <td>${book.pages}</td>
+//       <td>${book.read}</td>
+//     `;
+//     bookTable.appendChild(newRow);
 
-});
+// });
 
 function addBookToLibrary(...args) {
     const book = new Book(...args);
