@@ -29,12 +29,12 @@ form.addEventListener('submit', (event) => {
 
 bookTable.addEventListener('click', event => {
     if (event.target.classList.contains('book-removal')) {
-        rowId = event.target.closest('tr').id;
+        rowId = event.target.closest('tr').dataset.index;
         myLibrary.splice(rowId, 1);
         updateBookTable();
     }
     if (event.target.classList.contains('toggle-read')) {
-        rowId = event.target.closest('tr').id;
+        rowId = event.target.closest('tr').dataset.index;
         myLibrary[rowId].toggleRead();
         updateBookTable();
     }
@@ -62,7 +62,7 @@ function updateBookTable() {
     };
     myLibrary.forEach(book => {
         const row = document.createElement('tr');
-        row.id = myLibrary.indexOf(book);
+        row.dataset.index = myLibrary.indexOf(book);
 
         const titleCell = document.createElement('td');
         titleCell.textContent = book.title;
