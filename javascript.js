@@ -12,8 +12,8 @@ newBook.addEventListener('click', () => {
     }
 });
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
     const title = document.querySelector('#book-title').value
     const author = document.querySelector('#book-author').value
     const pages = document.querySelector('#book-pages').value
@@ -49,14 +49,12 @@ Book.prototype.toggleRead = function () {
     this.read = this.read ? false : true;
 };
 
-
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
 }
-
 
 function updateBookTable() {
     while (existingBooks.firstChild) {
@@ -79,7 +77,7 @@ function updateBookTable() {
         row.appendChild(pagesCell);
 
         const readCell = document.createElement('td');
-        readCell.textContent = book.read === true ? 'Yes' : 'No';
+        readCell.textContent = book.read ? 'Yes' : 'No';
         row.appendChild(readCell);
 
         const changeRead = document.createElement('button');
@@ -100,4 +98,3 @@ function addBookToLibrary(...args) {
     const book = new Book(...args);
     myLibrary.push(book);
 }
-
