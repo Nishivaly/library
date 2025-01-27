@@ -29,21 +29,26 @@ form.addEventListener('submit', (e) => {
 
 bookTable.addEventListener('click', event => {
     if (event.target.classList.contains('book-removal')) {
-        alert('the fuck')
         rowId = event.target.closest('tr').id;
         myLibrary.splice(rowId, 1);
+        updateBookTable();
+    }
+    if (event.target.classList.contains('toggle-read')) {
+        rowId = event.target.closest('tr').id;
+        myLibrary[rowId].toggleRead();
         updateBookTable();
     }
 });
 
 Book.prototype.info = function () {
-    const readStatus = this.read === true ? 'already read' : 'not read yet';
+    const readStatus = this.read ? 'already read' : 'not read yet';
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
 };
 
 Book.prototype.toggleRead = function () {
-    this.read = this.read ? !this.read : this.read;
+    this.read = this.read ? false : true;
 };
+
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -77,11 +82,16 @@ function updateBookTable() {
         readCell.textContent = book.read === true ? 'Yes' : 'No';
         row.appendChild(readCell);
 
+        const changeRead = document.createElement('button');
+        changeRead.textContent = 'Toggle read';
+        changeRead.classList.add('toggle-read');
+        row.appendChild(changeRead);
+
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.classList.add('book-removal');
         row.appendChild(removeButton);
-       
+
         existingBooks.appendChild(row);
     });
 };
