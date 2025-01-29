@@ -40,20 +40,32 @@ bookTable.addEventListener('click', event => {
     }
 });
 
-Book.prototype.info = function () {
-    const readStatus = this.read ? 'already read' : 'not read yet';
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
-};
+// Book.prototype.info = function () {
+//     const readStatus = this.read ? 'already read' : 'not read yet';
+//     return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`
+// };
 
-Book.prototype.toggleRead = function () {
-    this.read = this.read ? false : true;
-};
+// Book.prototype.toggleRead = function () {
+//     this.read = this.read ? false : true;
+// };
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+// function Book(title, author, pages, read) {
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.read = read;
+// }
+
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    toggleRead = () => {
+        this.read = this.read ? false : true;
+    }
 }
 
 function updateBookTable() {
